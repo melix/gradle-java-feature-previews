@@ -12,3 +12,6 @@ If you want to run Gradle with an older JDK, and compile/test with JDK 15, just 
 Future releases of Gradle will make it even easier to configure cross-compilation (using a different JDK than what Gradle itself is using).
 
 Details can be found in this [blog post](https://melix.github.io/blog/2020/06/java-feature-previews-gradle.html).
+
+This branch uses the Kotlin DSL.
+If you want to use the Groovy DSL, please look at [this branch](https://github.com/melix/gradle-java-feature-previews/tree/groovy-dsl).
