@@ -3,7 +3,13 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(15))
+    }
 }
 
 dependencies {
@@ -21,24 +27,3 @@ tasks.withType<Test>().configureEach {
 tasks.withType<JavaCompile>().configureEach {
     options.compilerArgs.add("--enable-preview")
 }
-
-// Gradle also works currently with Java 15 ea+26, but if it didn't
-// you could run it with 14 and fork compilation to use 15
-
-providers.environmentVariable("JDK15")
-        .forUseAtConfigurationTime()
-        .map(::File)
-        .orNull?.let { javaHome ->
-            println("Configuring your build to use JDK 15 from $javaHome")
-            tasks.withType<Test>().configureEach {
-                executable = "${javaHome}/bin/java"
-                jvmArgs("--enable-preview")
-            }
-
-            tasks.withType<JavaCompile>().configureEach {
-                options.isFork = true
-                options.forkOptions.javaHome = javaHome
-                options.compilerArgs.addAll(listOf("--enable-preview", "--release", "15"))
-            }
-        }
-
